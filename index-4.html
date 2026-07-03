@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mythbborrn Calculator — 50 tools for math, physics, chemistry, finance, health & more</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+  :root{
+    --ink:#0D1117;
+    --panel:#141A22;
+    --panel-line:#232B36;
+    --teal:#5EEAD4;
+    --amber:#F5A623;
+    --paper:#ECE9E1;
+    --muted:#7C8791;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit;}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:28px 24px;
+    max-width:1080px;margin:0 auto;
+  }
+  .brand{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:18px;
+    letter-spacing:0.02em;
+    display:flex;align-items:center;gap:10px;
+  }
+  .brand .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--teal);
+    box-shadow:0 0 12px var(--teal);
+  }
+  .nav-link{
+    font-size:14px;color:var(--muted);text-decoration:none;
+    border:1px solid var(--panel-line);
+    padding:8px 16px;border-radius:100px;
+    transition:border-color .2s, color .2s;
+  }
+  .nav-link:hover{border-color:var(--teal);color:var(--teal);}
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    padding:64px 24px 80px;
+    max-width:1080px;margin:0 auto;
+    display:grid;gap:28px;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(40px,7vw,68px);
+    line-height:1.03;
+    letter-spacing:-0.01em;
+    max-width:800px;
+  }
+  h1 em{
+    font-style:normal;
+    color:var(--teal);
+  }
+  .sub{
+    font-size:17px;
+    color:var(--muted);
+    max-width:520px;
+  }
+
+  /* readout ticker — signature element */
+  .readout{
+    margin-top:8px;
+    background:var(--panel);
+    border:1px solid var(--panel-line);
+    border-radius:12px;
+    padding:22px 24px;
+    max-width:560px;
+    position:relative;
+    overflow:hidden;
+  }
+  .readout::before{
+    content:'';
+    position:absolute;top:0;left:0;width:3px;height:100%;
+    background:var(--teal);
+  }
+  .readout-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:10px;
+  }
+  .readout-line{
+    font-family:'JetBrains Mono',monospace;
+    font-size:clamp(16px,3vw,20px);
+    color:var(--teal);
+    min-height:28px;
+    white-space:pre;
+  }
+  .cursor{
+    display:inline-block;
+    width:9px;height:1em;
+    background:var(--teal);
+    vertical-align:text-bottom;
+    animation:blink 1s steps(1) infinite;
+    margin-left:2px;
+  }
+  @keyframes blink{50%{opacity:0;}}
+
+  .cta-row{
+    display:flex;flex-wrap:wrap;align-items:center;gap:18px;
+    margin-top:12px;
+  }
+  .btn-primary{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:500;
+    font-size:15px;
+    background:var(--teal);
+    color:#08201C;
+    padding:15px 28px;
+    border-radius:8px;
+    text-decoration:none;
+    display:inline-flex;align-items:center;gap:10px;
+    transition:transform .15s, box-shadow .15s;
+    box-shadow:0 0 0 rgba(94,234,212,0);
+  }
+  .btn-primary:hover{
+    transform:translateY(-1px);
+    box-shadow:0 8px 24px rgba(94,234,212,0.18);
+  }
+  .cta-meta{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    color:var(--muted);
+  }
+  .cta-meta b{color:var(--paper);font-weight:500;}
+
+  /* ---------- CATEGORY GRID ---------- */
+  section.categories{
+    padding:20px 24px 80px;
+    max-width:1080px;margin:0 auto;
+    border-top:1px solid var(--panel-line);
+  }
+  .section-head{
+    display:flex;align-items:baseline;justify-content:space-between;
+    padding:48px 0 32px;
+    flex-wrap:wrap;gap:10px;
+  }
+  .section-head h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:26px;font-weight:700;
+  }
+  .section-head span{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;color:var(--muted);
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:1px;
+    background:var(--panel-line);
+    border:1px solid var(--panel-line);
+    border-radius:14px;
+    overflow:hidden;
+  }
+  @media(min-width:720px){
+    .grid{grid-template-columns:repeat(4,1fr);}
+  }
+  .card{
+    background:var(--panel);
+    padding:26px 22px;
+  }
+  .card .icon{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--amber);
+    letter-spacing:0.1em;
+    margin-bottom:14px;
+    display:block;
+  }
+  .card h3{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:17px;font-weight:700;
+    margin-bottom:14px;
+  }
+  .card ul{list-style:none;display:grid;gap:8px;}
+  .card li{
+    font-size:13.5px;
+    color:var(--muted);
+    padding-left:14px;
+    position:relative;
+  }
+  .card li::before{
+    content:'';
+    position:absolute;left:0;top:7px;
+    width:5px;height:1px;
+    background:var(--panel-line);
+  }
+
+  /* ---------- SPEC STRIP ---------- */
+  .specs{
+    border-top:1px solid var(--panel-line);
+    border-bottom:1px solid var(--panel-line);
+    padding:28px 0;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:24px;
+  }
+  @media(min-width:720px){.specs{grid-template-columns:repeat(4,1fr);}}
+  .spec{
+    font-family:'JetBrains Mono',monospace;
+  }
+  .spec .num{
+    font-size:24px;color:var(--teal);font-weight:700;
+    display:block;margin-bottom:4px;
+  }
+  .spec .label{
+    font-size:12px;color:var(--muted);letter-spacing:0.04em;
+  }
+
+  /* ---------- TRUST NOTE ---------- */
+  .trust{
+    max-width:1080px;margin:0 auto;
+    padding:56px 24px;
+    display:grid;gap:16px;
+  }
+  .trust h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:24px;font-weight:700;
+    max-width:520px;
+  }
+  .trust p{
+    color:var(--muted);
+    max-width:520px;
+    font-size:14.5px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:1px solid var(--panel-line);
+    padding:32px 24px;
+  }
+  .footer-row{
+    max-width:1080px;margin:0 auto;
+    display:flex;flex-wrap:wrap;
+    align-items:center;justify-content:space-between;
+    gap:16px;
+  }
+  .footer-row .brand{font-size:14px;}
+  .footer-links{
+    display:flex;gap:22px;
+    font-size:13px;color:var(--muted);
+  }
+  .footer-links a{text-decoration:none;}
+  .footer-links a:hover{color:var(--teal);}
+
+  :focus-visible{outline:2px solid var(--teal);outline-offset:3px;}
+
+  @media (prefers-reduced-motion: reduce){
+    .cursor{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand"><span class="dot"></span>Mythbborrn</div>
+  <a class="nav-link" href="#download">Download</a>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">Free · Android · No sign‑in required</div>
+  <h1>One app that <em>solves</em><br>what you're stuck on.</h1>
+  <p class="sub">50 tools across math, physics, chemistry, finance, conversions, health, and time — built for students and professionals who don't want to open seven different apps.</p>
+
+  <div class="readout">
+    <div class="readout-label">Live readout</div>
+    <div class="readout-line" id="readout">&nbsp;</div>
+  </div>
+
+  <div class="cta-row">
+    <a class="btn-primary" href="https://apkpure.com/p/com.mythbborrnquill.app" id="download">
+      Download APK — 3.2 MB ↓
+    </a>
+    <div class="cta-meta">Android 7.0+ &nbsp;·&nbsp; <b>v2.0</b> &nbsp;·&nbsp; No ads, no login</div>
+  </div>
+</header>
+
+<section class="categories wrap">
+  <div class="section-head">
+    <h2>What's inside</h2>
+    <span>7 categories / 50 tools</span>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <span class="icon">01 · MATH</span>
+      <h3>Mathematics</h3>
+      <ul>
+        <li>Scientific calculator</li>
+        <li>Quadratic equation solver</li>
+        <li>Pythagorean theorem</li>
+        <li>Statistics &amp; fractions</li>
+        <li>LCM / HCF &amp; prime checker</li>
+        <li>Percentage calculator</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="icon">02 · PHYSICS</span>
+      <h3>Physics</h3>
+      <ul>
+        <li>Ohm's law</li>
+        <li>Velocity calculator</li>
+        <li>Power calculator</li>
+        <li>Kinetic &amp; potential energy</li>
+        <li>Wave calculator</li>
+        <li>Gravitational force &amp; pressure</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="icon">03 · CHEM</span>
+      <h3>Chemistry</h3>
+      <ul>
+        <li>Molar mass calculator</li>
+        <li>Molarity calculator</li>
+        <li>pH calculator</li>
+        <li>Dilution calculator</li>
+        <li>Ideal gas law</li>
+        <li>Percent composition</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="icon">04 · FINANCE</span>
+      <h3>Financial</h3>
+      <ul>
+        <li>Loan &amp; mortgage calculator</li>
+        <li>Compound interest</li>
+        <li>Salary &amp; GPA calculator</li>
+        <li>Profit &amp; discount</li>
+        <li>Insurance estimator</li>
+        <li>Age &amp; date calculator</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="icon">05 · CONVERT</span>
+      <h3>Converters</h3>
+      <ul>
+        <li>Length &amp; area</li>
+        <li>Weight</li>
+        <li>Temperature</li>
+        <li>Speed</li>
+        <li>Currency (live rates)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="icon">06 · HEALTH</span>
+      <h3>Health &amp; Women's</h3>
+      <ul>
+        <li>BMI &amp; body fat</li>
+        <li>Calorie &amp; water intake</li>
+        <li>Ideal weight</li>
+        <li>Ovulation calculator</li>
+        <li>Period tracker</li>
+        <li>Pregnancy due date</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="icon">07 · TIME</span>
+      <h3>Clocks &amp; Timers</h3>
+      <ul>
+        <li>World clock</li>
+        <li>Stopwatch</li>
+        <li>Countdown timer</li>
+        <li>Digital clock</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="specs">
+    <div class="spec"><span class="num">50</span><span class="label">CALCULATORS</span></div>
+    <div class="spec"><span class="num">3.2MB</span><span class="label">APP SIZE</span></div>
+    <div class="spec"><span class="num">0</span><span class="label">LOGIN REQUIRED</span></div>
+    <div class="spec"><span class="num">FREE</span><span class="label">NO SUBSCRIPTION</span></div>
+  </div>
+</section>
+
+<section class="trust wrap">
+  <h2>Built by one developer, not a template farm.</h2>
+  <p>Mythbborrn Calculator is made and maintained directly — no ad networks bolted on, no "premium" paywall hiding basic tools. If something's broken, it gets fixed by the person who built it.</p>
+</section>
+
+<footer>
+  <div class="footer-row">
+    <div class="brand"><span class="dot"></span>Mythbborrn</div>
+    <div class="footer-links">
+      <a href="https://apkpure.com/p/com.mythbborrnquill.app">Download</a>
+      <a href="#">Report an issue</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const formulas = [
+    "V = I × R           Ohm's Law",
+    "M = n / V           Molarity",
+    "A = P(1 + r/n)^nt   Compound Interest",
+    "c² = a² + b²        Pythagorean Theorem",
+    "pH = -log[H⁺]       Acidity",
+    "Eₖ = ½mv²           Kinetic Energy"
+  ];
+
+  const el = document.getElementById('readout');
+  let fi = 0, ci = 0, deleting = false;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function tick(){
+    const full = formulas[fi];
+    if(prefersReduced){
+      el.textContent = formulas[0];
+      return;
+    }
+    if(!deleting){
+      ci++;
+      el.innerHTML = full.slice(0,ci) + '<span class="cursor"></span>';
+      if(ci >= full.length){
+        deleting = true;
+        setTimeout(tick, 1600);
+        return;
+      }
+    } else {
+      ci--;
+      el.innerHTML = full.slice(0,ci) + '<span class="cursor"></span>';
+      if(ci <= 0){
+        deleting = false;
+        fi = (fi + 1) % formulas.length;
+      }
+    }
+    setTimeout(tick, deleting ? 18 : 34);
+  }
+  tick();
+</script>
+
+</body>
+</html>
